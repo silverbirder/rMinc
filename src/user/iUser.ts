@@ -1,7 +1,20 @@
-import IMailRule from "./mailRule/iMailRule";
-import IMail from "./mail/iMail";
+import MailRule from "./mailRule/MailRule";
+import IMailThread from "./mail/iMailThread";
+import IMailApp from "./mail/iMailApp";
 
 export default interface IUser {
-    setMailRule(mailRules: Array<IMailRule>): void;
-    getMails(): Array<IMail>;
+    mailRules: Array<MailRule>
+    mailApp: IMailApp
+    stockMailThreads: Array<StockMailThreads>
+
+    fetchMails(): void
+
+    setMailRules(mailRules: Array<MailRule>): void
+
+    doRMinc(): void
+}
+
+export interface StockMailThreads {
+    rule: MailRule
+    mailThreads: Array<IMailThread>
 }

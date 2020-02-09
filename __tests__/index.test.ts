@@ -1,18 +1,16 @@
 import IUser from "../src/user/iUser";
-import UserMock from "../src/user/userMock";
-import AmazonMailRuleMock from "../src/user/mailRule/AmazonMailRuleMock";
-import IMail from "../src/user/mail/iMail";
+import UserImpl from "../src/user/userImpl";
+import MailRule from "../src/user/mailRule/MailRule";
+import AmazonMailRule from "../src/user/mailRule/AmazonMailRule";
 
 describe('Class: User', () => {
     describe('Method: TBD', () => {
         describe('Args: TBD', () => {
             it('Assert: TBD', () => {
-                const user: IUser = new UserMock();
-                user.setMailRule([new AmazonMailRuleMock()]);
-                const mails: Array<IMail> = user.getMails();
-                mails.forEach((mail: IMail) => {
-                    mail.toCalendar();
-                });
+                const user: IUser = new UserImpl();
+                const amazonMailRule: MailRule = new AmazonMailRule();
+                user.setMailRules([amazonMailRule]);
+                user.fetchMails();
             });
         });
     });

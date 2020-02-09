@@ -1,12 +1,21 @@
-import IUser from "./iUser";
-import IMailRule from "./mailRule/iMailRule";
-import IMail from "./mail/iMail";
+import IUser, {StockMailThreads} from "./iUser";
+import MailRule from "./mailRule/MailRule";
+import MailAppMock from "./mail/mailAppMock";
+import IMailApp from "./mail/iMailApp";
 
 export default class UserMock implements IUser {
-    getMails(): Array<IMail> {
-        return [];
+    mailApp: IMailApp = new MailAppMock();
+    mailRules: Array<MailRule> = [];
+    stockMailThreads: Array<StockMailThreads> = [];
+
+    fetchMails(): void {
+        this.stockMailThreads = [];
     }
 
-    setMailRule(mailRules: Array<IMailRule>): void {
+    setMailRules(mailRules: Array<MailRule>) {
+    };
+
+    doRMinc() {
+
     }
 }
