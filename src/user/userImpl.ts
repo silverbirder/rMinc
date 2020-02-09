@@ -1,13 +1,13 @@
 import IUser, {StockMailThreads} from "./iUser";
-import MailRule from "./mailRule/MailRule";
-import IMailThread from "./mail/iMailThread";
-import IMailApp from "./mail/iMailApp";
-import ILabel from "./mail/iLabel";
-import ICalendarApp from "./calendar/iCalendarApp";
+import MailRule from "./mailRule/mailRule";
+import IMailThread from "./mail/mailThread/iMailThread";
+import IMailApp from "./mail/mailApp/iMailApp";
+import ILabel from "./mail/label/iLabel";
+import ICalendarApp from "./calendarApp/iCalendarApp";
 import ICalendar from "./calendar/iCalendar";
-import IMailMessage from "./mail/iMailMessage";
-import MailAppImpl from "./mail/mailAppImpl";
-import CalendarAppImpl from "./calendar/calendarAppImpl";
+import IMailMessage from "./mail/mailMessage/iMailMessage";
+import MailAppImpl from "./mail/mailApp/mailAppImpl";
+import CalendarAppImpl from "./calendarApp/calendarAppImpl";
 
 export default class UserImpl implements IUser {
     mailApp: IMailApp = new MailAppImpl();
@@ -26,8 +26,10 @@ export default class UserImpl implements IUser {
         this.stockMailThreads.forEach((stockMailThreads: StockMailThreads) => {
             stockMailThreads.mailThreads.forEach((mailThread: IMailThread) => {
                 mailThread.getMessages().forEach((mailMessage: IMailMessage) => {
-                    const subject: string = mailMessage.getSubject();
-                    Logger.log(subject);
+                    const body: string = mailMessage.getBody();
+                    Logger.log(body);
+                    // const dateRange: DateRange = stockMailThreads.rule.extractDateRange(body);
+                    // const subject: string = mailMessage.getSubject();
                 });
             });
         });

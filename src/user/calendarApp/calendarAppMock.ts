@@ -1,5 +1,5 @@
 import ICalendarApp from "./iCalendarApp";
-import ICalendar from "./iCalendar";
+import ICalendar from "../calendar/iCalendar";
 
 export default class CalendarAppMock implements ICalendarApp {
     getCalendarByName(name: string): ICalendar {

@@ -1,4 +1,4 @@
-export default class MailRule {
+export default abstract class MailRule {
     filteringKeyword: string = '';
     name: string = '';
     after: string = '';
@@ -20,8 +20,15 @@ export default class MailRule {
     buildLabel(): string {
         return `${this.name}.${LABEL.CONFIRMED}`
     }
+
+    abstract extractDateRange(body: string): DateRange;
 }
 
 export const LABEL = {
     CONFIRMED: 'confirmed',
 };
+
+export interface DateRange {
+    start: Date,
+    end: Date,
+}

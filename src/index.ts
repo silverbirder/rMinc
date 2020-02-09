@@ -1,5 +1,5 @@
 import UserImpl from "./user/userImpl";
-import AmazonMailRule from "./user/mailRule/AmazonMailRule";
+import AmazonMailRule from "./user/mailRule/amazonMailRule";
 
 declare const global: {
     User: any

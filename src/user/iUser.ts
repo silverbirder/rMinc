@@ -1,6 +1,6 @@
-import MailRule from "./mailRule/MailRule";
-import IMailThread from "./mail/iMailThread";
-import IMailApp from "./mail/iMailApp";
+import MailRule from "./mailRule/mailRule";
+import IMailThread from "./mail/mailThread/iMailThread";
+import IMailApp from "./mail/mailApp/iMailApp";
 
 export default interface IUser {
     mailRules: Array<MailRule>

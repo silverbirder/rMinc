@@ -1,5 +1,5 @@
-import IMailThread from "./iMailThread";
-import ILabel from "./iLabel";
+import IMailThread from "../mailThread/iMailThread";
+import ILabel from "../label/iLabel";
 
 export default interface IMailApp {
     search(q: string): Array<IMailThread>

@@ -1,6 +1,6 @@
-import IMailThread from "./iMailThread";
+import IMailThread from "../mailThread/iMailThread";
 import IMailApp from "./iMailApp";
-import ILabel from "./iLabel";
+import ILabel from "../label/iLabel";
 
 export default class MailAppMock implements IMailApp {
     search(q: string): Array<IMailThread> {
