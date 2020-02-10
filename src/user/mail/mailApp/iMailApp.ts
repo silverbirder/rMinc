@@ -6,5 +6,5 @@ export default interface IMailApp {
 
     getUserLabelByName(name: string): ILabel
 
-    createLabel(name: string): void
+    createLabel(name: string): ILabel
 }

@@ -21,7 +21,9 @@ export default abstract class MailRule {
         return `${this.name}.${LABEL.CONFIRMED}`
     }
 
-    abstract extractDateRange(body: string): DateRange;
+    abstract extractDateRange(body: string, baseDate?: Date): DateRange;
+
+    abstract extractLocation(body: string): string;
 }
 
 export const LABEL = {

@@ -11,7 +11,7 @@ export default class MailAppImpl implements IMailApp {
         return GmailApp.getUserLabelByName(name)
     }
 
-    createLabel(name: string): void {
-        GmailApp.createLabel(name);
+    createLabel(name: string): ILabel {
+        return GmailApp.createLabel(name)
     }
 }
