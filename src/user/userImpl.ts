@@ -32,7 +32,8 @@ export default class UserImpl implements IUser {
                     const mailDate: Date = new Date(mailMessage.getDate().getTime());
                     const dateRange: DateRange = stockMailThreads.rule.extractDateRange(body, mailDate);
                     const location: string = stockMailThreads.rule.extractLocation(body);
-                    const subject: string = mailMessage.getSubject();
+                    const title: string = stockMailThreads.rule.extractTitle(body);
+                    const subject: string = title ? title : mailMessage.getSubject();
                     this.calendar!.createEvent(subject, dateRange.start, dateRange.end, {
                         description: mailThread.getPermalink(),
                         location: location

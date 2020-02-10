@@ -24,6 +24,8 @@ export default abstract class MailRule {
     abstract extractDateRange(body: string, baseDate?: Date): DateRange;
 
     abstract extractLocation(body: string): string;
+
+    abstract extractTitle(body: string): string;
 }
 
 export const LABEL = {

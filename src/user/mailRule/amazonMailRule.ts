@@ -13,19 +13,20 @@ export default class AmazonMailRule extends MailRule {
         const location: string = message.split(/<br\s?\/?>/).slice(1).join('').trim();
         return location
     }
+
     extractDateRange(body: string, baseDate: Date): DateRange {
         // お届け予定日：</span><br> <strong>土曜日, 11/24 08:00 - 12:00</strong>
         const messageMatch: RegExp = new RegExp('お届け予定日?.+(?=<strong>)<strong>(.+)(?=<\/strong>)');
         const matchedMessage: RegExpMatchArray | null = body.match(messageMatch);
         if (matchedMessage === null) {
-            throw Error('Not found delivery date message');
+            throw Error('Not found date range message');
         }
         // 土曜日, 11/24 08:00 - 12:00
         const message: string = matchedMessage[1];
         // 11/24
         const matchedDate: RegExpMatchArray | null = message.match(/(\d+\/\d+)/);
         if (matchedDate === null) {
-            throw Error('Not found delivery date');
+            throw Error('Not found date range');
         }
         const deliveryDateStr: string = matchedDate[1];
 
@@ -37,19 +38,25 @@ export default class AmazonMailRule extends MailRule {
             startTimeStr = matchedTime[1];
             endTimeStr = matchedTime[2];
         }
-
-        const month: number = parseInt(deliveryDateStr.split(/\//)[0], 10);
-        const day: number = parseInt(deliveryDateStr.split(/\//)[1], 10);
-        const startHour: number = parseInt(startTimeStr.split(/:/)[0], 10);
-        const startMinutes: number = parseInt(startTimeStr.split(/:/)[1], 10);
-        const endHour: number = parseInt(endTimeStr.split(/:/)[0], 10);
-        const endMinutes: number = parseInt(endTimeStr.split(/:/)[1], 10);
+        const deliveryDateAry: Array<string> = deliveryDateStr.split(/\//);
+        const startTimeAry: Array<string> = startTimeStr.split(/:/);
+        const endTimeAry: Array<string> = endTimeStr.split(/:/);
+        const month: number = parseInt(deliveryDateAry[0], 10);
+        const day: number = parseInt(deliveryDateAry[1], 10);
+        const startHour: number = parseInt(startTimeAry[0], 10);
+        const startMinute: number = parseInt(startTimeAry[1], 10);
+        const endHour: number = parseInt(endTimeAry[0], 10);
+        const endMinute: number = parseInt(endTimeAry[1], 10);
         return {
-            start: new Date(baseDate.getFullYear(), month - 1, day, startHour, startMinutes),
-            end: new Date(baseDate.getFullYear(), month - 1, day, endHour, endMinutes)
+            start: new Date(baseDate.getFullYear(), month - 1, day, startHour, startMinute),
+            end: new Date(baseDate.getFullYear(), month - 1, day, endHour, endMinute)
         }
     }
 
-    name = 'amazon';
+    extractTitle(body: string) {
+        return '';
+    }
+
+    name = 'Amazon';
     filteringKeyword = 'from:(shipment-tracking@amazon.co.jp) 発送';
 }
