@@ -34,12 +34,12 @@ export default class UserImpl implements IUser {
                     const location: string = stockMailThreads.rule.extractLocation(body);
                     const title: string = stockMailThreads.rule.extractTitle(body);
                     const subject: string = title ? title : mailMessage.getSubject();
-                    this.calendar!.createEvent(subject, dateRange.start, dateRange.end, {
+                    stockMailThreads.rule.calendar!.createEvent(subject, dateRange.start, dateRange.end, {
                         description: mailThread.getPermalink(),
                         location: location
                     });
                 });
-                mailThread.addLabel(this.label!);
+                mailThread.addLabel(stockMailThreads.rule.label!);
             });
         });
     }
@@ -47,13 +47,13 @@ export default class UserImpl implements IUser {
     setMailRules(mailRules: Array<MailRule>) {
         mailRules.forEach((mailRule: MailRule) => {
             const mailLabel: string = mailRule.buildLabel();
-            this.label = this.mailApp.getUserLabelByName(mailLabel);
-            if (!this.label) {
-                this.label = this.mailApp.createLabel(mailLabel);
+            mailRule.label = this.mailApp.getUserLabelByName(mailLabel);
+            if (!mailRule.label) {
+                mailRule.label = this.mailApp.createLabel(mailLabel);
             }
-            this.calendar = this.calendarApp.getCalendarByName(mailLabel);
-            if (!this.calendar) {
-                this.calendar = this.calendarApp.createCalendar(mailLabel);
+            mailRule.calendar = this.calendarApp.getCalendarByName(mailLabel);
+            if (!mailRule.calendar) {
+                mailRule.calendar = this.calendarApp.createCalendar(mailLabel);
             }
         });
         this.mailRules = mailRules;

@@ -1,8 +1,13 @@
+import ILabel from "../mail/label/iLabel";
+import ICalendar from "../calendar/iCalendar";
+
 export default abstract class MailRule {
     filteringKeyword: string = '';
     name: string = '';
     after: string = '';
     before: string = '';
+    label?: ILabel;
+    calendar?: ICalendar;
 
     constructor() {
         const now: Date = new Date();
