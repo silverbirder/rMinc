@@ -18,7 +18,7 @@ export default abstract class MailRule {
     }
 
     buildLabel(): string {
-        return `${this.name}.${LABEL.CONFIRMED}`
+        return `${LABEL.CONFIRMED}.${this.name}`
     }
 
     abstract extractDateRange(body: string, baseDate?: Date): DateRange;

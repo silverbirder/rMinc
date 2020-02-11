@@ -2,26 +2,26 @@ import MailRule, {DateRange} from "./mailRule";
 
 export default class TohoCinemasMailRule extends MailRule {
     extractLocation(body: string): string {
-        // ■映画館 Theater&nbsp; XXXX　<span class="il">TOHO</span> <span class="il">CINEMAS</span> XXXX　<br>
+        // ■映画館 Theater XXXX　XXXX XXXX
         const messageMatch: RegExp = new RegExp('映画館(.+)');
         const matchedMessage: RegExpMatchArray | null = body.match(messageMatch);
         if (matchedMessage === null) {
             throw Error('Not found location message');
         }
-        // XXXX　<span class="il">TOHO</span> <span class="il">CINEMAS</span> XXXX　
+        // Theater　XXXX XXXX XXXX　
         const message: string = matchedMessage[1].trim();
         const location: string = message.replace(/^Theater/, '').trim();
         return location
     }
 
     extractDateRange(body: string): DateRange {
-        // ■上映日 Date&nbsp; 2018/9/23　■時間 Time&nbsp; 18:30～ <br>
+        // ■上映日 Date 2018/9/23　■時間 Time 18:30～
         const messageMatch: RegExp = new RegExp('上映日(.+)');
         const matchedMessage: RegExpMatchArray | null = body.match(messageMatch);
         if (matchedMessage === null) {
             throw Error('Not found date range message');
         }
-        //  Date&nbsp; 2018/9/23　■時間 Time&nbsp; 18:30～
+        //  Date 2018/9/23　■時間 Time 18:30～
         const message: string = matchedMessage[1];
         const matchedDate: RegExpMatchArray | null = message.match(/(\d+\/\d+\/\d+)/);
         const matchedTime: RegExpMatchArray | null = message.match(/(\d+:\d+)/);
@@ -44,17 +44,17 @@ export default class TohoCinemasMailRule extends MailRule {
     }
 
     extractTitle(body: string) {
-        // ■映画名称 Movie&nbsp; （吹）プーと大人になった僕&nbsp; CHRISTOPHER ROBIN / JAPANESE <br>
+        // ■映画名称 Movie （吹）プーと大人になった僕 CHRISTOPHER ROBIN / JAPANESE
         const messageMatch: RegExp = new RegExp('映画名称(.+)');
         const matchedMessage: RegExpMatchArray | null = body.match(messageMatch);
         if (matchedMessage === null) {
             throw Error('Not found title message');
         }
-        //  （吹）プーと大人になった僕&nbsp; CHRISTOPHER ROBIN / JAPANESE
+        //  （吹）プーと大人になった僕 CHRISTOPHER ROBIN / JAPANESE
         const title: string = matchedMessage[1].trim().replace(/^Movie/, '').trim();
         return title;
     }
 
-    name = 'TOHO_CINEMAS';
+    name = 'toho_cinemas';
     filteringKeyword = 'from:(i-net.ticket@ml.tohotheater.jp)';
 }

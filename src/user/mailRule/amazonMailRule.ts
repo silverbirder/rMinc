@@ -57,6 +57,6 @@ export default class AmazonMailRule extends MailRule {
         return '';
     }
 
-    name = 'Amazon';
+    name = 'amazon';
     filteringKeyword = 'from:(shipment-tracking@amazon.co.jp) 発送';
 }
