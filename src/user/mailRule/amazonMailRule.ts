@@ -3,7 +3,7 @@ import MailRule, {DateRange} from "./mailRule";
 export default class AmazonMailRule extends MailRule {
     extractLocation(body: string): string {
         // お届け先：</span><br> <p> <strong> XXXX 様 <br> XXX-XXXX <br> XXXX <br> XXXX <br> XXXX <br> </strong>
-        const messageMatch: RegExp = new RegExp('お届け先.+(?=<strong>)<strong>(.+)(?=<\/strong>)');
+        const messageMatch: RegExp = new RegExp('お届け先.+?(?=<strong>)<strong>(.+?)(?=<\/strong>)', 's');
         const matchedMessage: RegExpMatchArray | null = body.match(messageMatch);
         if (matchedMessage === null) {
             throw Error('Not found location message');

@@ -9,13 +9,15 @@ export default abstract class MailRule {
     label?: ILabel;
     calendar?: ICalendar;
 
-    constructor() {
-        const now: Date = new Date();
-        const MM: string = ("0" + (now.getMonth() + 1)).slice(-2);
-        const DD: string = ("0" + now.getDate()).slice(-2);
-        const YYYYMMDD = `${now.getFullYear()}/${MM}/${DD}`;
-        this.before = YYYYMMDD;
-        this.after = YYYYMMDD;
+    constructor(before?: Date, after?: Date) {
+        this.before = this._dateFormat(before === undefined ? new Date() : before!);
+        this.after = this._dateFormat(after === undefined ? new Date() : after!);
+    }
+
+    _dateFormat(d: Date): string {
+        const MM: string = ("0" + (d.getMonth() + 1)).slice(-2);
+        const DD: string = ("0" + d.getDate()).slice(-2);
+        return `${d.getFullYear()}/${MM}/${DD}`
     }
 
     buildQuery(): string {

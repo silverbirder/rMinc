@@ -8,7 +8,7 @@ export default class ShokutakubinMailRule extends MailRule {
          XXXX
         【お届け希望日】
          */
-        const messageMatch: RegExp = new RegExp('【お届け先住所】([\\s\\S]+?)【お届け希望日】');
+        const messageMatch: RegExp = new RegExp('【お届け先住所】(.+?)【お届け希望日】', 's');
         const matchedMessage: RegExpMatchArray | null = body.match(messageMatch);
         if (matchedMessage === null) {
             throw Error('Not found location message');
@@ -73,7 +73,7 @@ export default class ShokutakubinMailRule extends MailRule {
         ・送り状No：XXXX
         Title
          */
-        const messageMatch: RegExp = new RegExp('送り状No.+\\s+(.+)');
+        const messageMatch: RegExp = new RegExp('送り状No(.+)', 's');
         const matchedMessage: RegExpMatchArray | null = body.match(messageMatch);
         if (matchedMessage === null) {
             throw Error('Not found title message');

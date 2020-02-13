@@ -1,0 +1,203 @@
+Index: __tests__/index.test.ts
+===================================================================
+--- __tests__/index.test.ts	(revision 9efbfffa39fb2f4b9918e916e6416618fe4c4126)
++++ __tests__/index.test.ts	(revision 9efbfffa39fb2f4b9918e916e6416618fe4c4126)
+@@ -1,17 +0,0 @@
+-import IUser from "../src/user/iUser";
+-import UserImpl from "../src/user/userImpl";
+-import MailRule from "../src/user/mailRule/mailRule";
+-import AmazonMailRule from "../src/user/mailRule/amazonMailRule";
+-
+-describe('Class: User', () => {
+-    describe('Method: TBD', () => {
+-        describe('Args: TBD', () => {
+-            it('Assert: TBD', () => {
+-                const user: IUser = new UserImpl();
+-                const amazonMailRule: MailRule = new AmazonMailRule();
+-                user.setMailRules([amazonMailRule]);
+-                user.fetchMails();
+-            });
+-        });
+-    });
+-});
+\ No newline at end of file
+Index: src/user/mailRule/mailRule.ts
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/user/mailRule/mailRule.ts	(revision 9efbfffa39fb2f4b9918e916e6416618fe4c4126)
++++ src/user/mailRule/mailRule.ts	(date 1581584430515)
+@@ -9,13 +9,15 @@
+     label?: ILabel;
+     calendar?: ICalendar;
+ 
+-    constructor() {
+-        const now: Date = new Date();
+-        const MM: string = ("0" + (now.getMonth() + 1)).slice(-2);
+-        const DD: string = ("0" + now.getDate()).slice(-2);
+-        const YYYYMMDD = `${now.getFullYear()}/${MM}/${DD}`;
+-        this.before = YYYYMMDD;
+-        this.after = YYYYMMDD;
++    constructor(before?: Date, after?: Date) {
++        this.before = this._dateFormat(before === undefined ? new Date() : before!);
++        this.after = this._dateFormat(after === undefined ? new Date() : after!);
++    }
++
++    _dateFormat(d: Date): string {
++        const MM: string = ("0" + (d.getMonth() + 1)).slice(-2);
++        const DD: string = ("0" + d.getDate()).slice(-2);
++        return `${d.getFullYear()}/${MM}/${DD}`
+     }
+ 
+     buildQuery(): string {
+Index: src/user/mailRule/shokutakubinMailRule.ts
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/user/mailRule/shokutakubinMailRule.ts	(revision 9efbfffa39fb2f4b9918e916e6416618fe4c4126)
++++ src/user/mailRule/shokutakubinMailRule.ts	(date 1581587203776)
+@@ -8,7 +8,7 @@
+          XXXX
+         【お届け希望日】
+          */
+-        const messageMatch: RegExp = new RegExp('【お届け先住所】([\\s\\S]+?)【お届け希望日】');
++        const messageMatch: RegExp = new RegExp('【お届け先住所】(.+?)【お届け希望日】', 's');
+         const matchedMessage: RegExpMatchArray | null = body.match(messageMatch);
+         if (matchedMessage === null) {
+             throw Error('Not found location message');
+@@ -73,7 +73,7 @@
+         ・送り状No：XXXX
+         Title
+          */
+-        const messageMatch: RegExp = new RegExp('送り状No.+\\s+(.+)');
++        const messageMatch: RegExp = new RegExp('送り状No(.+)', 's');
+         const matchedMessage: RegExpMatchArray | null = body.match(messageMatch);
+         if (matchedMessage === null) {
+             throw Error('Not found title message');
+Index: src/user/mailRule/amazonMailRule.ts
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/user/mailRule/amazonMailRule.ts	(revision 9efbfffa39fb2f4b9918e916e6416618fe4c4126)
++++ src/user/mailRule/amazonMailRule.ts	(date 1581587444479)
+@@ -3,7 +3,7 @@
+ export default class AmazonMailRule extends MailRule {
+     extractLocation(body: string): string {
+         // お届け先：</span><br> <p> <strong> XXXX 様 <br> XXX-XXXX <br> XXXX <br> XXXX <br> XXXX <br> </strong>
+-        const messageMatch: RegExp = new RegExp('お届け先.+(?=<strong>)<strong>(.+)(?=<\/strong>)');
++        const messageMatch: RegExp = new RegExp('お届け先.+?(?=<strong>)<strong>(.+?)(?=<\/strong>)', 's');
+         const matchedMessage: RegExpMatchArray | null = body.match(messageMatch);
+         if (matchedMessage === null) {
+             throw Error('Not found location message');
+Index: __tests__/user/mailRule/amazonMailRule.test.ts
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- __tests__/user/mailRule/amazonMailRule.test.ts	(revision 9efbfffa39fb2f4b9918e916e6416618fe4c4126)
++++ __tests__/user/mailRule/amazonMailRule.test.ts	(date 1581587618571)
+@@ -1,17 +1,23 @@
+-import MailRule, {DateRange} from "../../../src/user/mailRule/mailRule";
++import MailRule from "../../../src/user/mailRule/mailRule";
++import AmazonMailRule from "../../../src/user/mailRule/amazonMailRule";
+ import * as fs from 'fs';
+ import * as path from 'path';
+-import shokutakubinMailRule from "../../../src/user/mailRule/shokutakubinMailRule";
++
++describe('Class: AmazonMailRule', () => {
++    describe('Method: extractLocation', () => {
++        describe('Args: Undefined', () => {
++            it('Assert: TBD', () => {
++                // Arrange
++                const html: string = fs.readFileSync(path.resolve(__dirname, './html/amazonMail_mmdd.html'), 'utf8');
++                const mailRule: MailRule = new AmazonMailRule();
++                const expectedLocation: string = 'XXXX';
+ 
+-describe('', () => {
+-   describe('', () => {
+-      const rules: MailRule = new shokutakubinMailRule();
+-      const html: string = fs.readFileSync(path.resolve(__dirname, "./html/shokutakubinMail_hhmm_hhmm.txt"), "utf8");
+-      const dateRange: DateRange = rules.extractDateRange(html);
+-      console.log(dateRange);
+-      const location: string = rules.extractLocation(html);
+-      console.log(location);
+-      const title: string = rules.extractTitle(html);
+-      console.log(title);
+-   });
++                // Act
++                const actualLocation: string = mailRule.extractLocation(html);
++
++                // Assert
++                expect(expectedLocation).toContain(actualLocation);
++            })
++        });
++    });
+ });
+\ No newline at end of file
+Index: __tests__/user/mailRule/mailRule.test.ts
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- __tests__/user/mailRule/mailRule.test.ts	(date 1581585755262)
++++ __tests__/user/mailRule/mailRule.test.ts	(date 1581585755262)
+@@ -0,0 +1,55 @@
++import MailRule from "../../../src/user/mailRule/mailRule";
++import AmazonMailRule from "../../../src/user/mailRule/amazonMailRule";
++
++describe('Class: MailRule', () => {
++    describe('Method: constructor', () => {
++        describe('Args: before: Date = 2020/02/01, after: Date = 2020/02/15', () => {
++            test('Assert: attribute: before: string = 2020/02/01, after: string = 2020/02/15', () => {
++                // Arrange
++                const expectedBefore: string = '2020/02/01';
++                const expectedAfter: string = '2020/02/15';
++
++                // Act
++                const mailRule: MailRule = new AmazonMailRule(new Date(expectedBefore), new Date(expectedAfter));
++                const actualBefore: string = mailRule.before;
++                const actualAfter: string = mailRule.after;
++
++                // Assert
++                expect(actualBefore).toBe(expectedBefore);
++                expect(actualAfter).toBe(expectedAfter);
++            });
++        });
++    });
++    describe('Method: buildQuery', () => {
++        describe('Args: Undefined', () => {
++            test('Assert: "label, after, before, filteringKeyword" in query', () => {
++                // Arrange
++                const mailRule: MailRule = new AmazonMailRule();
++                const expectedKeysInQuery: Array<string> = ['label', 'after', 'before', mailRule.filteringKeyword];
++
++                // Act
++                const actualQuery: string = mailRule.buildQuery();
++
++                // Assert
++                expectedKeysInQuery.forEach((expectedKey: string) => {
++                    expect(actualQuery).toContain(expectedKey);
++                })
++            });
++        });
++    });
++    describe('Method: buildLabel', () => {
++        describe('Args: Undefined', () => {
++            test('Assert: "confirmed" in label', () => {
++                // Arrange
++                const mailRule: MailRule = new AmazonMailRule();
++                const expectedKeyInLabel: string = 'confirmed';
++
++                // Act
++                const actualLabel: string = mailRule.buildLabel();
++
++                // Assert
++                expect(actualLabel).toContain(expectedKeyInLabel);
++            });
++        });
++    });
++});
+\ No newline at end of file
