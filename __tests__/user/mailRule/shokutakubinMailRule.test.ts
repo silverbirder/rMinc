@@ -23,7 +23,7 @@ describe('Class: ShokutakubinMailRule', () => {
     });
     describe('Method: extractDateRange', () => {
         describe('Data: 2020/05/20', () => {
-            test('Assert: date range(2020/05/20 09:00~ 2020/05/20 12:00)', () => {
+            test('Assert: date range(2020/05/20 09:00 ~ 2020/05/20 12:00)', () => {
                 // Arrange
                 const mailRule: MailRule = new ShokutakubinMailRule();
                 const expectedDateRange: DateRange = {
@@ -39,7 +39,7 @@ describe('Class: ShokutakubinMailRule', () => {
             })
         });
         describe('Data: 2020/05/20 19:00 - 21:00', () => {
-            test('Assert: date range(2020/05/20 19:00~ 2020/05/20 21:00)', () => {
+            test('Assert: date range(2020/05/20 19:00 ~ 2020/05/20 21:00)', () => {
                 // Arrange
                 const mailRule: MailRule = new ShokutakubinMailRule();
                 const expectedDateRange: DateRange = {

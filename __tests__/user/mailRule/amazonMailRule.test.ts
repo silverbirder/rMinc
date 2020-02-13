@@ -23,7 +23,7 @@ describe('Class: AmazonMailRule', () => {
     });
     describe('Method: extractDateRange', () => {
         describe('Data: 2020/05/20', () => {
-            test('Assert: date range(2020/05/20 00:00~ 2020/05/20 00:00)', () => {
+            test('Assert: date range(2020/05/20 00:00 ~ 2020/05/20 00:00)', () => {
                 // Arrange
                 const mailRule: MailRule = new AmazonMailRule();
                 const expectedDateRange: DateRange = {
@@ -39,7 +39,7 @@ describe('Class: AmazonMailRule', () => {
             })
         });
         describe('Data: 2020/05/20 08:00 - 12:00', () => {
-            test('Assert: date range(2020/05/20 08:00~ 2020/05/20 12:00)', () => {
+            test('Assert: date range(2020/05/20 08:00 ~ 2020/05/20 12:00)', () => {
                 // Arrange
                 const mailRule: MailRule = new AmazonMailRule();
                 const expectedDateRange: DateRange = {
