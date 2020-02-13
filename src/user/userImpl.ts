@@ -17,6 +17,21 @@ export default class UserImpl implements IUser {
     calendarApp: ICalendarApp = new CalendarAppImpl();
     calendar?: ICalendar;
 
+    setMailRules(mailRules: Array<MailRule>) {
+        mailRules.forEach((mailRule: MailRule) => {
+            const mailLabel: string = mailRule.buildLabel();
+            mailRule.label = this.mailApp.getUserLabelByName(mailLabel);
+            if (!mailRule.label) {
+                mailRule.label = this.mailApp.createLabel(mailLabel);
+            }
+            mailRule.calendar = this.calendarApp.getCalendarByName(mailLabel);
+            if (!mailRule.calendar) {
+                mailRule.calendar = this.calendarApp.createCalendar(mailLabel);
+            }
+        });
+        this.mailRules = mailRules;
+    }
+
     fetchMails(): void {
         this.mailRules.forEach((mailRule: MailRule) => {
             const mailThreads: Array<IMailThread> = this.mailApp.search(mailRule.buildQuery());
@@ -43,19 +58,4 @@ export default class UserImpl implements IUser {
             });
         });
     }
-
-    setMailRules(mailRules: Array<MailRule>) {
-        mailRules.forEach((mailRule: MailRule) => {
-            const mailLabel: string = mailRule.buildLabel();
-            mailRule.label = this.mailApp.getUserLabelByName(mailLabel);
-            if (!mailRule.label) {
-                mailRule.label = this.mailApp.createLabel(mailLabel);
-            }
-            mailRule.calendar = this.calendarApp.getCalendarByName(mailLabel);
-            if (!mailRule.calendar) {
-                mailRule.calendar = this.calendarApp.createCalendar(mailLabel);
-            }
-        });
-        this.mailRules = mailRules;
-    };
 }
