@@ -1,10 +1,13 @@
 import IMailThread from "./iMailThread";
 import IMailMessage from "../mailMessage/iMailMessage";
 import ILabel from "../label/iLabel";
+import MailMessageMock from "../mailMessage/mailMessageMock";
 
 export default class MailThreadMock implements IMailThread {
+    mailMessages: Array<IMailMessage> = [new MailMessageMock()];
+
     getMessages(): Array<IMailMessage> {
-        return []
+        return this.mailMessages;
     }
 
     getPermalink(): string {
@@ -12,6 +15,6 @@ export default class MailThreadMock implements IMailThread {
     }
 
     addLabel(label: ILabel): IMailThread {
-        return new MailThreadMock()
+        return this
     }
 }
