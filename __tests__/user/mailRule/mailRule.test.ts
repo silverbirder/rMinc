@@ -21,7 +21,7 @@ describe('Class: MailRule', () => {
         });
     });
     describe('Method: buildQuery', () => {
-        describe('Args: Undefined', () => {
+        describe('Args: undefined', () => {
             test('Assert: "label, after, before, filteringKeyword" in query', () => {
                 // Arrange
                 const mailRule: MailRule = new AmazonMailRule();
@@ -38,7 +38,7 @@ describe('Class: MailRule', () => {
         });
     });
     describe('Method: buildLabel', () => {
-        describe('Args: Undefined', () => {
+        describe('Args: undefined', () => {
             test('Assert: "confirmed" in label', () => {
                 // Arrange
                 const mailRule: MailRule = new AmazonMailRule();

@@ -16,7 +16,7 @@ export default class AmazonMailRule extends MailRule {
 
     extractDateRange(body: string, baseDate: Date): DateRange {
         // お届け予定日：</span><br> <strong>土曜日, 11/24 08:00 - 12:00</strong>
-        const messageMatch: RegExp = new RegExp('お届け予定日?.+(?=<strong>)<strong>(.+)(?=<\/strong>)');
+        const messageMatch: RegExp = new RegExp('お届け予定日?.+?(?=<strong>)<strong>(.+?)(?=<\/strong>)', 's');
         const matchedMessage: RegExpMatchArray | null = body.match(messageMatch);
         if (matchedMessage === null) {
             throw Error('Not found date range message');
