@@ -8,7 +8,7 @@ describe('Class: AmazonMailRule', () => {
     const htmlMMDDHHMM: string = fs.readFileSync(path.resolve(__dirname, './html/amazonMail_mmdd_hhmm-hhmm.html'), 'utf8');
     describe('Method: extractLocation', () => {
         describe('Data: location(XXX-XXXX  XXXX  XXXX  XXXX)', () => {
-            it('Assert: extracted location(XXX-XXXX  XXXX  XXXX  XXXX)', () => {
+            test('Assert: extracted location(XXX-XXXX  XXXX  XXXX  XXXX)', () => {
                 // Arrange
                 const mailRule: MailRule = new AmazonMailRule();
                 const expectedLocation: string = 'XXX-XXXX  XXXX  XXXX  XXXX';
@@ -17,13 +17,13 @@ describe('Class: AmazonMailRule', () => {
                 const actualLocation: string = mailRule.extractLocation(htmlMMDD);
 
                 // Assert
-                expect(actualLocation).toContain(expectedLocation);
+                expect(actualLocation).toBe(expectedLocation);
             })
         });
     });
     describe('Method: extractDateRange', () => {
         describe('Data: 2020/05/20', () => {
-            it('Assert: date range(2020/05/20 00:00~ 2020/05/20 00:00)', () => {
+            test('Assert: date range(2020/05/20 00:00~ 2020/05/20 00:00)', () => {
                 // Arrange
                 const mailRule: MailRule = new AmazonMailRule();
                 const expectedDateRange: DateRange = {
@@ -39,7 +39,7 @@ describe('Class: AmazonMailRule', () => {
             })
         });
         describe('Data: 2020/05/20 08:00 - 12:00', () => {
-            it('Assert: date range(2020/05/20 08:00~ 2020/05/20 12:00)', () => {
+            test('Assert: date range(2020/05/20 08:00~ 2020/05/20 12:00)', () => {
                 // Arrange
                 const mailRule: MailRule = new AmazonMailRule();
                 const expectedDateRange: DateRange = {
@@ -56,18 +56,16 @@ describe('Class: AmazonMailRule', () => {
         });
     });
     describe('Method: extractTitle', () => {
-        describe('Args: undefined', () => {
-            it('Assert: Title is ""', () => {
-                // Arrange
-                const mailRule: MailRule = new AmazonMailRule();
-                const expectedTitle: string = '';
+        test('Assert: Title is ""', () => {
+            // Arrange
+            const mailRule: MailRule = new AmazonMailRule();
+            const expectedTitle: string = '';
 
-                // Act
-                const actualTitle: string = mailRule.extractTitle(htmlMMDD);
+            // Act
+            const actualTitle: string = mailRule.extractTitle(htmlMMDD);
 
-                // Assert
-                expect(actualTitle).toContain(expectedTitle);
-            })
+            // Assert
+            expect(actualTitle).toBe(expectedTitle);
         });
     });
 });

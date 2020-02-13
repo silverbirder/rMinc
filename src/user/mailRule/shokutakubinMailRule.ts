@@ -73,7 +73,7 @@ export default class ShokutakubinMailRule extends MailRule {
         ・送り状No：XXXX
         Title
          */
-        const messageMatch: RegExp = new RegExp('送り状No(.+)', 's');
+        const messageMatch: RegExp = new RegExp('送り状No.+\n(.+)');
         const matchedMessage: RegExpMatchArray | null = body.match(messageMatch);
         if (matchedMessage === null) {
             throw Error('Not found title message');

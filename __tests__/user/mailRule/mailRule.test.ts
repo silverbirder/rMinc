@@ -21,35 +21,31 @@ describe('Class: MailRule', () => {
         });
     });
     describe('Method: buildQuery', () => {
-        describe('Args: undefined', () => {
-            test('Assert: "label, after, before, filteringKeyword" in query', () => {
-                // Arrange
-                const mailRule: MailRule = new AmazonMailRule();
-                const expectedKeysInQuery: Array<string> = ['label', 'after', 'before', mailRule.filteringKeyword];
+        test('Assert: "label, after, before, filteringKeyword" in query', () => {
+            // Arrange
+            const mailRule: MailRule = new AmazonMailRule();
+            const expectedKeysInQuery: Array<string> = ['label', 'after', 'before', mailRule.filteringKeyword];
 
-                // Act
-                const actualQuery: string = mailRule.buildQuery();
+            // Act
+            const actualQuery: string = mailRule.buildQuery();
 
-                // Assert
-                expectedKeysInQuery.forEach((expectedKey: string) => {
-                    expect(actualQuery).toContain(expectedKey);
-                })
-            });
+            // Assert
+            expectedKeysInQuery.forEach((expectedKey: string) => {
+                expect(actualQuery).toContain(expectedKey);
+            })
         });
     });
     describe('Method: buildLabel', () => {
-        describe('Args: undefined', () => {
-            test('Assert: "confirmed" in label', () => {
-                // Arrange
-                const mailRule: MailRule = new AmazonMailRule();
-                const expectedKeyInLabel: string = 'confirmed';
+        test('Assert: "confirmed" in label', () => {
+            // Arrange
+            const mailRule: MailRule = new AmazonMailRule();
+            const expectedKeyInLabel: string = 'confirmed';
 
-                // Act
-                const actualLabel: string = mailRule.buildLabel();
+            // Act
+            const actualLabel: string = mailRule.buildLabel();
 
-                // Assert
-                expect(actualLabel).toContain(expectedKeyInLabel);
-            });
+            // Assert
+            expect(actualLabel).toContain(expectedKeyInLabel);
         });
     });
 });
