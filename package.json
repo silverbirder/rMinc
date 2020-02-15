@@ -23,7 +23,8 @@
     "GMail",
     "GCalendar",
     "Clasp",
-    "Typescript"
+    "Typescript",
+    "rMinc"
   ],
   "author": "silverbirder <silverbirder@gmail.com> (https://silver-birder.github.io)",
   "license": "MIT",
