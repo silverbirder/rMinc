@@ -1,7 +1,14 @@
 .idea
+__tests__
+src
+coverage
+sample
+
 .clasp.json
+.claspignore
 dist/appsscript.json
+
 tsconfig.json
 webpack.config.js
-__tests__/
-src/
+jest.config.js
+.gitignore
