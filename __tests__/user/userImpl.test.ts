@@ -5,6 +5,8 @@ import CalendarAppMock from "../../src/user/calendarApp/calendarAppMock";
 import MailRuleMock from "../../src/user/mailRule/mailRuleMock";
 import MailRule from "../../src/user/mailRule/mailRule";
 import MailThreadMock from "../../src/user/mail/mailThread/mailThreadMock";
+import CalendarMock from "../../src/user/calendar/calendarMock";
+import IMailThread from "../../src/user/mail/mailThread/iMailThread";
 
 describe('Class: UserImpl', () => {
     let user: IUser;
@@ -54,22 +56,72 @@ describe('Class: UserImpl', () => {
         });
     });
     describe('Method: doRMinc', () => {
-        describe('Data: TODO', () => {
-            test('Assert: TODO', () => {
+        describe('Data: single stockMailThread', () => {
+            test('Assert: called createEvent, addLabel', () => {
                 // Arrange
-                user.stockMailThreads = [
-                    {
-                        rule: new MailRuleMock(),
-                        mailThreads: [
-                            new MailThreadMock(),
-                        ],
-                    },
-                ];
+                const mailRule: MailRule = new MailRuleMock();
+                mailRule.calendar = new CalendarMock();
+                mailRule.calendar.createEvent = jest.fn();
+                const mailThread: IMailThread = new MailThreadMock();
+                mailThread.addLabel = jest.fn();
+                const stockMailThread: StockMailThreads = {rule: mailRule, mailThreads: [mailThread]};
+                user.stockMailThreads = [stockMailThread];
 
                 // Act
-                // user.doRMinc();
+                user.doRMinc();
+                const actualStockMailThread: StockMailThreads = user.stockMailThreads[0];
 
                 // Assert
+                expect(actualStockMailThread.rule.calendar!.createEvent).toBeCalled();
+                expect(actualStockMailThread.mailThreads[0].addLabel).toBeCalled();
+            });
+        });
+        describe('Data: many stockMailThreads', () => {
+            test('Assert: all called createEvent, addLabel', () => {
+                // Arrange
+                for (let i = 0; i < 3; i++) {
+                    const mailRule: MailRule = new MailRuleMock();
+                    mailRule.calendar = new CalendarMock();
+                    mailRule.calendar.createEvent = jest.fn();
+                    const mailThread: IMailThread = new MailThreadMock();
+                    mailThread.addLabel = jest.fn();
+                    user.stockMailThreads.push({rule: mailRule, mailThreads: [mailThread]});
+                }
+
+                // Act
+                user.doRMinc();
+                const actualStockMailThreads: Array<StockMailThreads> = user.stockMailThreads;
+
+                // Assert
+                actualStockMailThreads.forEach((actualStockMailThread: StockMailThreads) => {
+                    expect(actualStockMailThread.rule.calendar!.createEvent).toBeCalled();
+                    expect(actualStockMailThread.mailThreads[0].addLabel).toBeCalled();
+                });
+            });
+        });
+        describe('Data: single stockMailThreads (many mail threads)', () => {
+            test('Assert: called createEvent, all addLabel', () => {
+                // Arrange
+                const mailRule: MailRule = new MailRuleMock();
+                mailRule.calendar = new CalendarMock();
+                mailRule.calendar.createEvent = jest.fn();
+                const mailThreads: Array<IMailThread> = [];
+                for (let i = 0; i < 3; i++) {
+                    const mailThread: IMailThread = new MailThreadMock();
+                    mailThread.addLabel = jest.fn();
+                    mailThreads.push(mailThread);
+                }
+                user.stockMailThreads.push({rule: mailRule, mailThreads: mailThreads});
+
+                // Act
+                user.doRMinc();
+                const actualStockMailThread: StockMailThreads = user.stockMailThreads[0];
+
+                // Assert
+                expect(actualStockMailThread.rule.calendar!.createEvent).toBeCalled();
+                actualStockMailThread.mailThreads.forEach((mailThread: IMailThread) => {
+                    expect(mailThread.addLabel).toBeCalled();
+                });
             });
         });
     });
