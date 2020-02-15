@@ -3,6 +3,8 @@
 [![npm download](https://img.shields.io/npm/dt/@silverbirder/rminc.svg)](https://www.npmjs.com/package/@silverbirder/rminc)
 [![npm version](https://img.shields.io/npm/v/@silverbirder/rminc)](https://www.npmjs.com/package/@silverbirder/rminc)
 [![npm bundle size](https://img.shields.io/bundlephobia/min/@silverbirder/rminc)](https://www.npmjs.com/package/@silverbirder/rminc)
+[![github action](https://img.shields.io/github/workflow/status/Silver-birder/rMinc/main)](https://github.com/Silver-birder/rMinc/actions)
+[![Coverage Status](https://coveralls.io/repos/github/Silver-birder/rMinc/badge.svg?branch=master)](https://coveralls.io/github/Silver-birder/rMinc?branch=master)
 [![twitter](https://img.shields.io/twitter/url?style=social&url=https%3A%2F%2Ftwitter.com%2Fsilver_birder)](https://twitter.com/silver_birder)
 
 # rMinc
