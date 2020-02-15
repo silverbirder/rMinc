@@ -10,8 +10,13 @@ export default abstract class MailRule {
     calendar?: ICalendar;
 
     constructor(before?: Date, after?: Date) {
-        this.before = this._dateFormat(before === undefined ? new Date() : before!);
-        this.after = this._dateFormat(after === undefined ? new Date() : after!);
+        const now: Date = new Date();
+        const tomorrow: Date = new Date(now.getTime());
+        tomorrow.setDate(tomorrow.getDate() + 1);
+        const yesterday: Date = new Date(now.getTime());
+        yesterday.setDate(yesterday.getDate() - 1);
+        this.before = this._dateFormat(before === undefined ? tomorrow : before!);
+        this.after = this._dateFormat(after === undefined ? yesterday : after!);
     }
 
     _dateFormat(d: Date): string {
