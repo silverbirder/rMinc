@@ -3,6 +3,7 @@ __tests__
 src
 coverage
 sample
+.github
 
 .clasp.json
 .claspignore
