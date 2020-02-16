@@ -1,6 +1,6 @@
 {
   "name": "@silverbirder/rminc",
-  "version": "1.0.2-0",
+  "version": "1.1.0",
   "description": "rMinc is the Google Apps Script Library that register Mail in Calendar",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
