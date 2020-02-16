@@ -17,7 +17,7 @@ rMinc is the Google Apps Script Library that register Mail in Calendar.
         1. [TOHO CINEMAS](https://www.tohotheater.jp/)
         1. [SHOKUTAKU BIN](https://shokutakubin.com/)
         1. Your favorite services
-           1. you can create the custom mail rule.
+           1. you can create the custom mail rule (see [sample/sample.js](https://github.com/Silver-birder/rMinc/blob/master/sample/sample.js)).
 1. Register the calendar event.
     1. Set the value of below.
         1. Title
