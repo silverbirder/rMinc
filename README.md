@@ -31,7 +31,7 @@ Example from my Amazon mail is below.
 # Use By Google Apps Script
 
 1. Access the Your [Google Apps Script](https://script.google.com).
-1. Add the this library. (CaAT)
+1. Add the this library. (RMinc)
    1. API ID is  **MdL3uTK-myFlfF1-Ls1C1wiIH6OImGALS** 
 1. Use it like [sample/sample.js](https://github.com/Silver-birder/rMinc/blob/master/sample/sample.js)
 
